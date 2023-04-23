@@ -14,7 +14,7 @@ s3 = session.client(
 )
 
 # Создать новый бакет
-s3.create_bucket(Bucket='dez-rzv-final-project', )
+s3.create_bucket(Bucket='dez-rzv-final-project')
 
 # Загрузить объекты в бакет
 

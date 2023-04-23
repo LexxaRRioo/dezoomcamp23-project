@@ -24,8 +24,6 @@ Terraform for IaC
 Batch hourly
 
 
-api.openweathermap.org/data/2.5/forecast?lat=54.99244&lon=73.36859&appid=dc0c4a2f95f8ec1080e560b9089fc336&units=metric&mode=json&lang=en
-
 Notes:
 I must store API key securely (in .gitignored file at least)
 It's better to parametrize API params and expose them

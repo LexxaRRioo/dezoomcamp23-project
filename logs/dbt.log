@@ -1,0 +1,56 @@
+
+
+============================== 2023-04-23 07:38:57.440380 | d592af66-f44f-4ce7-a5fe-b3196f9a2fd5 ==============================
+[0m07:38:57.440380 [info ] [MainThread]: Running with dbt=1.4.6
+[0m07:38:57.441762 [debug] [MainThread]: running dbt with arguments {'write_json': True, 'use_colors': True, 'printer_width': 80, 'version_check': True, 'partial_parse': True, 'static_parser': True, 'profiles_dir': '/home/ubuntu/.dbt', 'send_anonymous_usage_stats': True, 'quiet': False, 'no_print': False, 'cache_selected_only': False, 'project_name': 'dez-dbt', 'skip_profile_setup': False, 'which': 'init', 'indirect_selection': 'eager'}
+[0m07:38:57.441944 [debug] [MainThread]: Tracking: tracking
+[0m07:38:57.451430 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86ea926f40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86ea926610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86ea926730>]}
+[0m07:38:57.451979 [info ] [MainThread]: Creating dbt configuration folder at /home/ubuntu/.dbt
+[0m07:39:03.568955 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86ea926640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86ea9265b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86ea926ac0>]}
+[0m07:39:03.569454 [debug] [MainThread]: Flushing usage events
+[0m07:39:04.103502 [error] [MainThread]: Encountered an error:
+
+[0m07:39:04.105030 [error] [MainThread]: Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/dbt/main.py", line 136, in main
+    results, succeeded = handle_and_check(args)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/dbt/main.py", line 206, in handle_and_check
+    task, res = run_from_args(parsed)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/dbt/main.py", line 253, in run_from_args
+    results = task.run()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/dbt/task/init.py", line 286, in run
+    project_name = self.get_valid_project_name()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/dbt/task/init.py", line 243, in get_valid_project_name
+    name = click.prompt("Enter a name for your project (letters, digits, underscore)")
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/click/termui.py", line 166, in prompt
+    value = prompt_func(prompt)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/click/termui.py", line 149, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+
+
+============================== 2023-04-23 07:39:12.742805 | 496e3d09-9296-45b9-9b11-cbed40e64481 ==============================
+[0m07:39:12.742805 [info ] [MainThread]: Running with dbt=1.4.6
+[0m07:39:12.744120 [debug] [MainThread]: running dbt with arguments {'write_json': True, 'use_colors': True, 'printer_width': 80, 'version_check': True, 'partial_parse': True, 'static_parser': True, 'profiles_dir': '/home/ubuntu/.dbt', 'send_anonymous_usage_stats': True, 'quiet': False, 'no_print': False, 'cache_selected_only': False, 'project_name': 'dez_dbt', 'skip_profile_setup': False, 'which': 'init', 'indirect_selection': 'eager'}
+[0m07:39:12.744300 [debug] [MainThread]: Tracking: tracking
+[0m07:39:12.753887 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb78a86ff40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb78a784790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb78a784730>]}
+[0m07:39:12.754961 [debug] [MainThread]: Starter project path: /home/ubuntu/.local/lib/python3.8/site-packages/dbt/include/starter_project
+[0m07:39:15.863089 [info ] [MainThread]: No sample profile found for clickhouse.
+[0m07:39:15.863635 [info ] [MainThread]: 
+Your new dbt project "dez_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m07:39:15.864033 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb78a86ff40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb78a784640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb78a7847c0>]}
+[0m07:39:15.864348 [debug] [MainThread]: Flushing usage events

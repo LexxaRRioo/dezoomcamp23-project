@@ -16,7 +16,7 @@ create s3 bucket for tf state and configure ./backend.conf
 https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-state-storage 
 
 . сгенерировать пару ключей для ssh с именем ```id_rsa``` и указать путь до .pub в ```variables.tf.vm_ssh_key_path``` (по умолчанию ~/.ssh/id_rsa.pub)
-
+add service_account_id to the variables
 
 . перед запуском каждой сессии нужно задать переменные. вариант для windows, powershell (токен следует обновлять каждый час, не реже раза в 12 часов):
 ```powershell
@@ -40,4 +40,32 @@ adding this ip to ~/.ssh/config
 
 create Kaggle account
 download new token: https://www.kaggle.com/settings and put it in ~/.kaggle/kaggle.json
+
+
+history:
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt install git -y
+sudo apt install python3-pip
+pip install dbt-clickhouse
+git clone https://github.com/LexxaRRioo/dezoomcamp23-project.git
+mkdir ~/.kaggle && cd ~/.kaggle
+code kaggle.json
+mkdir ~/.aws && cd ~/.aws
+code config
+code credentials
+
+run script.py
+change ACL in the bucket: set Viewer role to the service_account
+
+export PATH=$PATH:~/.local/bin
+cd ~/dezoomcamp23-project
+dbt init dez_dbt
+code ~/.dbt/profiles.yml
+
+dbt and clickhouse connection configured using this instruction:
+https://clickhouse.com/docs/en/integrations/dbt
+create and fill ~/.dbt/profiles.yml using connection info from clickhouse console.cloud.yandex.ru
+
+cd ~/dezoomcamp23-project/dez_dbt
+dbt debug
 
