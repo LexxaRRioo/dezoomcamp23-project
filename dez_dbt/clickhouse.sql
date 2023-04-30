@@ -1,7 +1,5 @@
 drop table if exists dezdb.stg_games_detailed;
 
-drop table if exists dezdb.stg_games_detailed;
-
 create table if not exists dezdb.stg_games_detailed
 engine MergeTree
 order by id
@@ -77,7 +75,7 @@ as select ID as id
 ,"Users rated"
 ,URL
 ,Thumbnail
-FROM s3('https://storage.yandexcloud.net/dez-rzv-final-project/data/2022-01-08.csv',  'CSVWithNames', 'ID UInt32,Name String,Year UInt16,Rank UInt16,Average decimal(10,5),"Bayes average" decimal(10,5),"Users rated" UInt32,URL String,Thumbnail String');
+FROM s3('https://storage.yandexcloud.net/dez-rzv-final-project/data/2022-01-08.csv','', '', 'CSVWithNames', 'ID UInt32,Name String,Year UInt16,Rank UInt16,Average decimal(10,5),"Bayes average" decimal(10,5),"Users rated" UInt32,URL String,Thumbnail String');
 
 drop table if exists dezdb.stg_games_reviews;
 
@@ -89,7 +87,7 @@ as select user
 ,comment
 ,ID as id
 ,name
-FROM s3('https://storage.yandexcloud.net/dez-rzv-final-project/data/bgg-19m-reviews.csv', 'CSVWithNames', 'user String,rating decimal(10,5),comment String,ID UInt32,name String');
+FROM s3('https://storage.yandexcloud.net/dez-rzv-final-project/data/bgg-19m-reviews.csv','', '','CSVWithNames', 'user String,rating decimal(10,5),comment String,ID UInt32,name String');
 
 
 select * from dezdb.games_aggregated
