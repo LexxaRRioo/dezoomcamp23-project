@@ -1,3 +1,8 @@
+variable "yandex_compute_image_family" {
+  type      = string
+  default   = "ubuntu-2004-lts"
+}
+
 variable "yc_folder_id" {
   type      = string
   sensitive = true
@@ -40,6 +45,11 @@ variable "vm_memory" {
   default = 8
 }
 
+variable "vm_core_fraction" {
+  type    = number
+  default = 50
+}
+
 variable "vm_platform" {
   type    = string
   default = "standard-v2"
@@ -55,9 +65,19 @@ variable "vm_disk_size" {
   default = 30
 }
 
-variable "vm_hostname" {
+variable "vm_disk_type" {
   type    = string
-  default = "base"
+  default = "network-hdd"
+}
+
+variable "vm_ssh_pub_key_path" {
+  type    = string
+  sensitive = true
+}
+
+variable "vm_username" {
+  type    = string
+  default = "ubuntu"
 }
 
 variable "vm_ssh_pub_key_path" {
@@ -69,129 +89,6 @@ variable "vm_ssh_pvt_key_path" {
   type    = string
   sensitive = true
 }
-
-
-
-## Managed_mysql
-
-variable "mysql_mng_environment" {
-  type    = string
-  default = "PRESTABLE"
-}
-
-variable "mysql_mng_version" {
-  type    = string
-  default = "8.0"
-}
-
-variable "mysql_mng_name" {
-  type    = string
-  default = "magento-managed"
-}
-
-variable "mysql_mng_preset" {
-  type    = string
-  default = "s2.small"
-}
-
-variable "mysql_mng_disk_type" {
-  type    = string
-  default = "network-ssd"
-}
-
-variable "mysql_mng_disk_size" {
-  type    = number
-  default = 32
-}
-
-variable "mysql_mng_access_lens" {
-  type    = bool
-  default = true
-}
-
-variable "mysql_mng_access_transfer" {
-  type    = bool
-  default = true
-}
-
-variable "mysql_mng_access_websql" {
-  type    = bool
-  default = true
-}
-
-variable "mysql_mng_public_id" {
-  type    = bool
-  default = false
-}
-
-variable "mysql_mng_maintenance_type" {
-  type    = string
-  default = "WEEKLY"
-}
-
-variable "mysql_mng_maintenance_day" {
-  type    = string
-  default = "SUN"
-}
-
-variable "mysql_mng_maintenance_hour" {
-  type    = number
-  default = 18
-}
-
-variable "mysql_mng_db" {
-  type    = string
-  default = "magento"
-}
-
-variable "mysql_mng_user_name" {
-  type      = string
-  sensitive = true
-}
-
-variable "mysql_mng_user_pass" {
-  type      = string
-  sensitive = true
-}
-
-variable "mysql_mng_auth_plugin" {
-  type    = string
-  default = "SHA256_PASSWORD"
-}
-
-variable "mysql_mng_global_permissions" {
-  type    = list(string)
-  default = ["PROCESS"]
-}
-
-variable "mysql_mng_user_roles" {
-  type    = list(string)
-  default = ["ALL", "INSERT"]
-}
-
-
-## Mysql endpoint source
-
-variable "mysql_user_name" {
-  type      = string
-  sensitive = true
-}
-
-variable "mysql_user_pass" {
-  type      = string
-  sensitive = true
-}
-
-variable "mysql_db_name" {
-  type    = string
-  default = "ya_sample_store"
-}
-
-variable "mysql_port" {
-  type    = number
-  default = 3306
-}
-
 
 ## networks
 
@@ -208,45 +105,6 @@ variable "subnet_name" {
 variable "subnet_v4_cidr" {
   type    = list(string)
   default = ["10.5.0.0/24"]
-}
-
-
-## endpoint mysql src
-
-variable "endpnt_mysql_src_name" {
-  type    = string
-  default = "mysql-source"
-}
-
-variable "endpnt_mysql_src_incl_tab_regex_list" {
-  type    = list(string)
-  default = ["sales_*"]
-}
-
-
-## endpoint mysql tgt
-
-variable "endpnt_mysql_tgt_name" {
-  type    = string
-  default = "mysql-manage-target"
-}
-
-variable "endpnt_mysql_tgt_skip_constr_check" {
-  type    = bool
-  default = true
-}
-
-
-## data transfer
-
-variable "data_transfer_name" {
-  type    = string
-  default = "mysql-mysql"
-}
-
-variable "data_transfer_type" {
-  type    = string
-  default = "SNAPSHOT_AND_INCREMENT"
 }
 
 ## clickhouse
@@ -301,18 +159,6 @@ variable "clkhs_user_roles" {
   default = ["mdbDbAdmin"]
 }
 
-variable "clkhs_timeout_create" {
-  default = "10m"
-}
-
-variable "clkhs_timeout_update" {
-  default = "10m"
-}
-
-variable "clkhs_timeout_delete" {
-  default = "10m"
-}
-
 variable "clkhs_config" {
   type = map(any)
   default = {
@@ -351,4 +197,29 @@ variable "clkhs_config" {
 variable "clkhs_admin_pass" {
   type = string
   sensitive = true
+}
+
+variable "clkhs_host_public_ip" {
+  type    = bool
+  default = true
+}
+
+variable "clkhs_access_data_lens" {
+  type    = bool
+  default = true
+}
+
+variable "clkhs_access_web_sql" {
+  type    = bool
+  default = true
+}
+
+variable "clkhs_cloud_storage_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "clkhs_cloud_storage_move_factor" {
+  type    = number
+  default = 0.15
 }

@@ -13,11 +13,7 @@ profile: 'dez_dbt'
 # The `model-paths` config, for example, states that models in this project can be
 # found in the "models/" directory. You probably won't need to change these!
 model-paths: ["models"]
-analysis-paths: ["analyses"]
-test-paths: ["tests"]
-seed-paths: ["seeds"]
 macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
 
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
@@ -35,9 +31,16 @@ models:
   dez_dbt:
     # Applies to all files under models/example/
       +materialized: table
-      core:
+      staging:
           +materialized: table
+          +tags: ['staging']
+      core:
+          +materialized: view
           +tags: ['core']
       datamarts:
-          +materialized: table
+          +materialized: view
           +tags: ['datamarts']
+
+vars:
+  aws_key_id: # fill in
+  aws_access_key: # fill in

@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+    - name: dezdb
+      schema: dezdb
+      loader: S3
+
+      tables:
+        - name: stg_games_aggregated
+          identifier: stg_games_aggregated
+        - name: stg_games_reviews
+          identifier: stg_games_reviews

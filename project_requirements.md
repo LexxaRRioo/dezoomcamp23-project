@@ -14,20 +14,8 @@ Points:
 4 points: Instructions are clear, it's easy to run the code, and the code works
 
 
-
 Stack would be:
-GCP (VM, GCS, BigQuery, DataStudio)
-Apache Spark for transformations
-Airflow for orchestration
+Yandex Cloud as cloud provider (VM, Clickhouse, Object storage(S3-like))
+DBT for transformations
+Nothing for orchestration because it's single run of ETL
 Terraform for IaC
-
-Batch hourly
-
-
-Notes:
-I must store API key securely (in .gitignored file at least)
-It's better to parametrize API params and expose them
-
-improvements: 
-. transform city name to geocode
-https://openweathermap.org/api/geocoding-api

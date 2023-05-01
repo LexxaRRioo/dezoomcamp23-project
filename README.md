@@ -1,6 +1,7 @@
 Dataset: https://www.kaggle.com/datasets/jvanelteren/boardgamegeek-reviews
 1GB in an archive
 
+![DEZ_project drawio](https://user-images.githubusercontent.com/63540060/235530006-03517b74-4663-4215-b7c6-f0fbfe98138b.png)
 
 
 
@@ -50,12 +51,12 @@ pip install dbt-clickhouse
 git clone https://github.com/LexxaRRioo/dezoomcamp23-project.git
 mkdir ~/.kaggle && cd ~/.kaggle
 code kaggle.json
+chmod 600 ~/.kaggle/kaggle.json
 mkdir ~/.aws && cd ~/.aws
 code config
 code credentials
 
-run script.py
-change ACL in the bucket: set Viewer role to the service_account
+run upload_to_s3.py
 
 export PATH=$PATH:~/.local/bin
 cd ~/dezoomcamp23-project
@@ -69,3 +70,26 @@ create and fill ~/.dbt/profiles.yml using connection info from clickhouse consol
 cd ~/dezoomcamp23-project/dez_dbt
 dbt debug
 
+add credentials from ~/.aws/credentials to the 2nd and the 3rd parameters of 'FROM s3()' function
+
+
+in dbt project:
+
+vars:
+  aws_key_id: # fill in
+  aws_access_key: # fill in
+
+dbt run-operation init_s3_sources
+dbt run
+
+dbt docs generate
+dbt docs serve --port 9999 
+
+
+
+Room to improve:
+. Replace Kaggle dataset with BoardGameGeek (BGG) API and automate batch processing via Mage or Airflow
+. Configure Liquibase on VM to manage database schema for tables based on s3 files/BGG API
+. Put everything into docker container and/or provision all needed configuration through Ansible
+. Fix service account permissions from clickhouse to s3 object storage
+. Replace each credential with variable to change it only in one place

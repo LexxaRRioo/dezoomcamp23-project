@@ -1,0 +1,22 @@
+version: 2
+
+models:
+    - name: dm_v_ratings_agg_by_year_bucket
+      description: >
+        Aggregation of average ratings and count of users rated by publish year buckets
+      columns:
+          - name: year_bucket
+            description: Buckets for years when games were published
+
+    - name: dm_v_ratings_agg_by_year
+      description: >
+        Aggregation of average ratings and count of users rated by publish years
+      columns:
+          - name: mx_avg
+            description: max("Bayes average")
+          - name: mn_avg
+            description: min("Bayes average")
+
+    - name: dm_v_reviews_agg_by_comm_bucket
+      description: >
+        Aggregation of average ratings and count of users rated by comment length buckets
