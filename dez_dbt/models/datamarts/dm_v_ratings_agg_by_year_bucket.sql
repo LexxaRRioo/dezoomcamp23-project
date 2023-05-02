@@ -2,7 +2,7 @@
 
 select 
      case 
-        when Year < 1 then 'bc'
+        when Year < 1 then '0 and less'
         when Year between 1 and 1000 then '1 to 1000'
         when Year between 1001 and 1500 then '1001 to 1500'
         when Year between 1501 and 1750 then '1501 to 1750'
@@ -13,8 +13,8 @@ select
         when Year between 1991 and 2000 then '1991 to 2000'
         when Year between 2001 and 2010 then '2001 to 2010'
         when Year between 2011 and 2020 then '2011 to 2020'
-        when Year between 2021 and toInt32(date_trunc('year', now())) then '2021 to now'
-        when Year >= toInt32(date_trunc('year', now())) then 'Future'
+        when Year between 2021 and 2022 then '2021 to 2022'
+        when Year > 2022 then 'Future'
      end year_bucket
     ,max("Bayes average") as mx_avg
     ,min("Bayes average") as mn_avg

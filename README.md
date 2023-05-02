@@ -16,8 +16,7 @@ create and write down static key for terraform
 create s3 bucket for tf state and configure ./backend.conf
 https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-state-storage 
 
-. сгенерировать пару ключей для ssh с именем ```id_rsa``` и указать путь до .pub в ```variables.tf.vm_ssh_key_path``` (по умолчанию ~/.ssh/id_rsa.pub)
-add service_account_id to the variables
+. сгенерировать пару ключей для ssh с именем ```id_ed25519``` и указать путь до .pub в ```variables.tf.vm_ssh_key_path``` (по умолчанию ~/.ssh/id_ed25519.pub)
 
 . перед запуском каждой сессии нужно задать переменные. вариант для windows, powershell (токен следует обновлять каждый час, не реже раза в 12 часов):
 ```powershell
@@ -44,23 +43,27 @@ download new token: https://www.kaggle.com/settings and put it in ~/.kaggle/kagg
 
 
 history:
+
+code ~/.kaggle/kaggle.json
+chmod 600 ~/.kaggle/kaggle.json
+code ~/.aws/config
+code ~/.aws/credentials
+chmod 600 ~/.aws/credentials
+
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt install git -y
-sudo apt install python3-pip
-pip install dbt-clickhouse
-git clone https://github.com/LexxaRRioo/dezoomcamp23-project.git
-mkdir ~/.kaggle && cd ~/.kaggle
-code kaggle.json
-chmod 600 ~/.kaggle/kaggle.json
-mkdir ~/.aws && cd ~/.aws
-code config
-code credentials
+sudo apt install python3-pip -y
+sudo apt install python3.8-venv -y
 
-run upload_to_s3.py
+git clone https://github.com/LexxaRRioo/dezoomcamp23-project.git
+cd dezoomcamp23-project
+. env/bin/activate
+pip install -r requirements.txt
 
 export PATH=$PATH:~/.local/bin
 cd ~/dezoomcamp23-project
-dbt init dez_dbt
+python3 upload_to_s3.py "your-bucket-name"
+
 code ~/.dbt/profiles.yml
 
 dbt and clickhouse connection configured using this instruction:
@@ -70,21 +73,17 @@ create and fill ~/.dbt/profiles.yml using connection info from clickhouse consol
 cd ~/dezoomcamp23-project/dez_dbt
 dbt debug
 
-add credentials from ~/.aws/credentials to the 2nd and the 3rd parameters of 'FROM s3()' function
-
-
-in dbt project:
-
-vars:
-  aws_key_id: # fill in
-  aws_access_key: # fill in
+replace <bucket_name> in dez_dbt/macros/init_s3_sources.sql using your bucket_name
 
 dbt run-operation init_s3_sources
+dbt test
 dbt run
 
 dbt docs generate
 dbt docs serve --port 9999 
 
+
+Then connect clickhouse to DataLens (BI service) via clickhouse cluster page in cloud console.
 
 
 Room to improve:
@@ -93,3 +92,8 @@ Room to improve:
 . Put everything into docker container and/or provision all needed configuration through Ansible
 . Fix service account permissions from clickhouse to s3 object storage
 . Replace each credential with variable to change it only in one place
+
+
+What didn't work:
+. service account to access s3 object storage from clickhouse server without secret keys
+. 

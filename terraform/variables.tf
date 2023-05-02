@@ -1,6 +1,6 @@
 variable "yandex_compute_image_family" {
-  type      = string
-  default   = "ubuntu-2004-lts"
+  type    = string
+  default = "ubuntu-2004-lts"
 }
 
 variable "yc_folder_id" {
@@ -32,7 +32,7 @@ variable "vm_nat" {
 
 variable "vm_name" {
   type    = string
-  default = "base"
+  default = "dez"
 }
 
 variable "vm_cores" {
@@ -70,23 +70,18 @@ variable "vm_disk_type" {
   default = "network-hdd"
 }
 
-variable "vm_ssh_pub_key_path" {
-  type    = string
-  sensitive = true
-}
-
 variable "vm_username" {
   type    = string
   default = "ubuntu"
 }
 
 variable "vm_ssh_pub_key_path" {
-  type    = string
+  type      = string
   sensitive = true
 }
 
 variable "vm_ssh_pvt_key_path" {
-  type    = string
+  type      = string
   sensitive = true
 }
 
@@ -126,12 +121,12 @@ variable "clkhs_cluster_env" {
 
 variable "clkhs_resource_preset_id" {
   type    = string
-  default = "b2.nano"
+  default = "b2.medium"
 }
 
 variable "clkhs_disk_size" {
   type    = number
-  default = 15
+  default = 20
 }
 
 variable "clkhs_disk_type" {
@@ -140,7 +135,7 @@ variable "clkhs_disk_type" {
 }
 
 variable "clkhs_user_name" {
-  type    = string
+  type      = string
   sensitive = true
 }
 
@@ -151,7 +146,7 @@ variable "clkhs_user_pass" {
 
 variable "clkhs_db_name" {
   type    = string
-  default = "testdb"
+  default = "dezdb"
 }
 
 variable "clkhs_user_roles" {
@@ -195,7 +190,7 @@ variable "clkhs_config" {
 }
 
 variable "clkhs_admin_pass" {
-  type = string
+  type      = string
   sensitive = true
 }
 

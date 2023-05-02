@@ -40,16 +40,16 @@ resource "yandex_compute_instance" "base_vm" {
   zone        = yandex_vpc_subnet.dez_project_subnet.zone
 
   resources {
-    cores  = var.vm_cores
-    memory = var.vm_memory
+    cores         = var.vm_cores
+    memory        = var.vm_memory
     core_fraction = var.vm_core_fraction
   }
 
   boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.ubuntu_20_04.id
-      type = var.vm_disk_type
-      size = var.vm_disk_size
+      type     = var.vm_disk_type
+      size     = var.vm_disk_size
     }
   }
 
@@ -65,7 +65,7 @@ resource "yandex_compute_instance" "base_vm" {
   }
 
   allow_stopping_for_update = true
-  depends_on = [yandex_vpc_subnet.dez_project_subnet]
+  depends_on                = [yandex_vpc_subnet.dez_project_subnet]
 }
 
 
@@ -107,9 +107,11 @@ resource "yandex_mdb_clickhouse_cluster" "clickhouse-cluster" {
   }
 
   cloud_storage {
-    enabled = var.clkhs_cloud_storage_enabled
+    enabled     = var.clkhs_cloud_storage_enabled
     move_factor = var.clkhs_cloud_storage_move_factor
   }
+  
+  service_account_id = "ajehanko46l81jme0724"
 
   depends_on = [yandex_vpc_subnet.dez_project_subnet,
   yandex_vpc_network.dez_project_net]

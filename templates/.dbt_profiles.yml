@@ -1,0 +1,12 @@
+dez_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      schema: dezdb
+      host: # input host here
+      port: 9440
+      user: yc-user
+      password: # input password here
+      secure: True
+      verify: False

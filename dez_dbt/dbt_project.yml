@@ -40,7 +40,3 @@ models:
       datamarts:
           +materialized: view
           +tags: ['datamarts']
-
-vars:
-  aws_key_id: # fill in
-  aws_access_key: # fill in

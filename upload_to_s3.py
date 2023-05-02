@@ -4,11 +4,11 @@ import boto3
 
 from pathlib import Path
 
-PATH = 'dezoomcamp23-project/data'
+PATH = 'data'
 BUCKET_NAME = sys.argv[1] #
 
 Path(PATH).mkdir(parents=True, exist_ok=True)
-# os.system(f'kaggle datasets download -p "{PATH}" --unzip --force jvanelteren/boardgamegeek-reviews')
+os.system(f'kaggle datasets download -p "{PATH}" --unzip --force jvanelteren/boardgamegeek-reviews')
 
 session = boto3.session.Session()
 s3 = session.client(
@@ -18,7 +18,7 @@ s3 = session.client(
 
 # Create new bucket
 if boto3.resource('s3',endpoint_url='https://storage.yandexcloud.net').Bucket(f'{BUCKET_NAME}').creation_date is None:
-    s3.create_bucket(Bucket=f'{BUCKET_NAME}')
+    s3.create_bucket(ACL='public-read', Bucket=f'{BUCKET_NAME}')
 
 # Upload files into bucket
 for filename in os.listdir(PATH):
