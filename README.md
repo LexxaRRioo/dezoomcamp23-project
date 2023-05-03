@@ -1,99 +1,52 @@
-Dataset: https://www.kaggle.com/datasets/jvanelteren/boardgamegeek-reviews
-1GB in an archive
+# Welcome to my version of Data engineering zoomcamp 2023 final project!
+
+This project is aimed to practice data engineering skills as final part of Data engineering zoomcamp 2023. Pipeline is built using cloud services and publicly available dataset. Dashboard answers some questions I'm interested in boardgames sphere. 
+
+### Links:
+* Final dashboard: https://datalens.yandex/aq4trx4em99k0
+* The zoomcamp course: https://github.com/DataTalksClub/data-engineering-zoomcamp
+* My homeworks during this course: https://github.com/LexxaRRioo/de-zoomcamp2023
+* Dataset used with boardgamegeek data: https://www.kaggle.com/datasets/jvanelteren/boardgamegeek-reviews (1GB compressed)
+* To evaluate this project use those criterias: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_7_project/README.md
+
+## Stack - Yandex Cloud as cloud provider:
+* Kaggle API as source
+* Python as middleware to download an archive and upload needed files into S3
+* Yandex Object Storage (S3-like) as intermediate cloud storage
+* Yandex Compute Instance as VM for dbt-Core
+* dbt-Core for transformations, autodocs, testing and lineage
+* Yandex Managed Clickhouse as OLAP DB
+* Terraform as IaC tool to spin up Clickhouse cluster and VM
+* Yandex Datalens as BI tool for dashboarding
+* Nothing for orchestration because it's single run of ELT 
 
 ![DEZ_project drawio](https://user-images.githubusercontent.com/63540060/235530006-03517b74-4663-4215-b7c6-f0fbfe98138b.png)
 
+## Lineage
+![lineage](https://user-images.githubusercontent.com/63540060/235883647-97bf7eff-65a3-4b36-b5eb-f7453ffc982e.png)
 
+## Dashboard screenshot
+![изображение](https://user-images.githubusercontent.com/63540060/235883905-cbfe663a-6211-4b7c-9316-9a8b4f44d262.png)
 
-# setup:
-### set yandex cloud secrets:
-* yc_folder_id
-* yc_cloud_id
+## Insights
+* Average rating in reviews almost doesn't depend on comment length and slightly decreases from empty comments to long comments
+* More than 80% of reviews on bgg are just numbers without comments
+* Game Crokinole was released in 1876 and still in BGG top 100 games of all time
+* Maximum avg rating of games published in every year increases in time - modern Boargames get higher appreciation (which could be biased with dates of reviewing and boargames creators could make modern games which are more likable for modern players)
+* During Coronavirus pandemic amount of published games and max avg rating were being decreased
+* Top 10 games were published in 2010s
 
-create and activate service account for the cloud, provide 'editor' and 'storage.admin' permissions
-create and write down static key for terraform
+## What I've tried and where I didn't succeed
+* Secure access from managed Clickhouse to S3 object storage via service account - got 403 error and decided to use public storage
+* Import wide table with detailed information about games with many categories via dbt macros - got error I guess on max_query_size but tuning of this parameter changed nothing (part of 2500 chars query was cut off)
+* Provision VM setup using Terraform - got authentication error for a long time and gave up
 
-create s3 bucket for tf state and configure ./backend.conf
-https://cloud.yandex.com/en/docs/tutorials/infrastructure-management/terraform-state-storage 
+## What I didn't try but it would be cool
+* Dockerize solution and/or provision VM config using Ansible or other IaC tools
+* Replace Kaggle dataset with live BoardGameGeek (BGG) API and automate batch processing via Mage or Airflow
+* Move credentials to any special secure service
+* Get bigger data where Spark or DuckDB to leverage their computatuon power
 
-. сгенерировать пару ключей для ssh с именем ```id_ed25519``` и указать путь до .pub в ```variables.tf.vm_ssh_key_path``` (по умолчанию ~/.ssh/id_ed25519.pub)
-
-. перед запуском каждой сессии нужно задать переменные. вариант для windows, powershell (токен следует обновлять каждый час, не реже раза в 12 часов):
-```powershell
-$Env:YC_CLOUD_ID=$(yc config get cloud-id)
-$Env:YC_FOLDER_ID=$(yc config get folder-id)
-$Env:YC_TOKEN=$(yc iam create-token)
-```
-
-. наконец, запустить команды в terraform
-```bash
-terraform init --backend-config backend.conf
-terraform plan -var-file="secret.tfvars" -out plan
-terraform apply plan # then hit yes
-```
-
-
-then connect to base_vm_ip using ssh and key generated earlier
-adding this ip to ~/.ssh/config
-
-
-
-create Kaggle account
-download new token: https://www.kaggle.com/settings and put it in ~/.kaggle/kaggle.json
-
-
-history:
-
-code ~/.kaggle/kaggle.json
-chmod 600 ~/.kaggle/kaggle.json
-code ~/.aws/config
-code ~/.aws/credentials
-chmod 600 ~/.aws/credentials
-
-sudo apt-get update && sudo apt-get upgrade -y
-sudo apt install git -y
-sudo apt install python3-pip -y
-sudo apt install python3.8-venv -y
-
-git clone https://github.com/LexxaRRioo/dezoomcamp23-project.git
-cd dezoomcamp23-project
-. env/bin/activate
-pip install -r requirements.txt
-
-export PATH=$PATH:~/.local/bin
-cd ~/dezoomcamp23-project
-python3 upload_to_s3.py "your-bucket-name"
-
-code ~/.dbt/profiles.yml
-
-dbt and clickhouse connection configured using this instruction:
-https://clickhouse.com/docs/en/integrations/dbt
-create and fill ~/.dbt/profiles.yml using connection info from clickhouse console.cloud.yandex.ru
-
-cd ~/dezoomcamp23-project/dez_dbt
-dbt debug
-
-replace <bucket_name> in dez_dbt/macros/init_s3_sources.sql using your bucket_name
-
-dbt run-operation init_s3_sources
-dbt test
-dbt run
-
-dbt docs generate
-dbt docs serve --port 9999 
-
-
-Then connect clickhouse to DataLens (BI service) via clickhouse cluster page in cloud console.
-
-
-Room to improve:
-. Replace Kaggle dataset with BoardGameGeek (BGG) API and automate batch processing via Mage or Airflow
-. Configure Liquibase on VM to manage database schema for tables based on s3 files/BGG API
-. Put everything into docker container and/or provision all needed configuration through Ansible
-. Fix service account permissions from clickhouse to s3 object storage
-. Replace each credential with variable to change it only in one place
-
-
-What didn't work:
-. service account to access s3 object storage from clickhouse server without secret keys
-. 
+## How to reproduce what I did
+Follow this technical instruction. I hope it would be under 30 min:
+https://github.com/LexxaRRioo/dezoomcamp23-project/blob/main/setup.md
