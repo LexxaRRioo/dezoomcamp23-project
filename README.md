@@ -2,14 +2,8 @@
 
 This project is aimed to practice data engineering skills as final part of Data engineering zoomcamp 2023. Pipeline is built using cloud services and publicly available dataset. Dashboard answers some questions I'm interested in boardgames sphere. 
 
-## Attention! Info for reviewers
-
-Repo hash is different from c9c97e0 because I didn't check earlier that Dashboard link could be not accessable from some countries. Try to use any Russian vpn (for ex. Opera GX built-in VPN function works https://www.opera.com/ru/download#opera-gx) or feel free to contact me via telegram @razvodov_alexey and I'll share my screen in realtime to show it. 
-
-(you can check diff, I'm not changing anything instead of that block of text)
-
 ### Links:
-* Final dashboard: https://datalens.yandex/aq4trx4em99k0
+* Final dashboard: https://datalens.yandex/aq4trx4em99k0 (turned off infra to save money, see screenshot below)
 * The zoomcamp course: https://github.com/DataTalksClub/data-engineering-zoomcamp
 * My homeworks during this course: https://github.com/LexxaRRioo/de-zoomcamp2023
 * Dataset used with boardgamegeek data: https://www.kaggle.com/datasets/jvanelteren/boardgamegeek-reviews (1GB compressed)
@@ -24,7 +18,7 @@ Repo hash is different from c9c97e0 because I didn't check earlier that Dashboar
 * Yandex Managed Clickhouse as OLAP DB
 * Terraform as IaC tool to spin up Clickhouse cluster and VM
 * Yandex Datalens as BI tool for dashboarding
-* Nothing for orchestration because it's single run of ELT 
+* Nothing for orchestration because it's a single run of EL and T 
 
 ![DEZ_project drawio](https://user-images.githubusercontent.com/63540060/235530006-03517b74-4663-4215-b7c6-f0fbfe98138b.png)
 
